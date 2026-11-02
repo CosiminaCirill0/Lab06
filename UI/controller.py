@@ -29,3 +29,25 @@ class Controller:
 
     # Altre Funzioni Event Handler
     # TODO
+    def mostra_strumenti(self, e):
+        strumenti = self._model.get_strumenti()
+        if strumenti is None:
+            self._view.show_alert("Errore nel recupero strumenti")
+            return
+
+        self._view.mostra_strumenti(strumenti)
+        self._view.update()
+
+
+    def cerca_per_tipo(self, e):
+        tipo=self._view.input_tipo_strumento.value.strip()
+        if tipo == "":
+            self._view.show_alert("Errore! Bisogna inserire un tipo di strumento")
+            return
+
+        strumenti_per_tipo = self._model.cerca_strumenti_per_tipo(tipo)
+
+        if strumenti_per_tipo is None:
+            self._view.show_alert("Errore nel recupero strumenti")
+            return
+        self._view.mostra_strumenti_per_tipo(strumenti_per_tipo)
